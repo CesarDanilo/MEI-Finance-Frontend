@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 
 const baseItems = [
     { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
-    { title: "Lançamentos", icon: ArrowLeftRight, url: "/dashboard" },
+    { title: "Lançamentos", icon: ArrowLeftRight, url: "/transactions" },
 ];
 
 const adminItems = [

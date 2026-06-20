@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PrivateRouteImport } from './routes/_private'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PublicAuthRouteImport } from './routes/_public/auth'
+import { Route as PrivateTransactionsRouteImport } from './routes/_private/transactions'
 import { Route as PrivateDashboardRouteImport } from './routes/_private/dashboard'
 
 const PrivateRoute = PrivateRouteImport.update({
@@ -28,6 +29,11 @@ const PublicAuthRoute = PublicAuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivateTransactionsRoute = PrivateTransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => PrivateRoute,
+} as any)
 const PrivateDashboardRoute = PrivateDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -37,11 +43,13 @@ const PrivateDashboardRoute = PrivateDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof PrivateDashboardRoute
+  '/transactions': typeof PrivateTransactionsRoute
   '/auth': typeof PublicAuthRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof PrivateDashboardRoute
+  '/transactions': typeof PrivateTransactionsRoute
   '/auth': typeof PublicAuthRoute
 }
 export interface FileRoutesById {
@@ -49,14 +57,21 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_private': typeof PrivateRouteWithChildren
   '/_private/dashboard': typeof PrivateDashboardRoute
+  '/_private/transactions': typeof PrivateTransactionsRoute
   '/_public/auth': typeof PublicAuthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/auth'
+  fullPaths: '/' | '/dashboard' | '/transactions' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/auth'
-  id: '__root__' | '/' | '/_private' | '/_private/dashboard' | '/_public/auth'
+  to: '/' | '/dashboard' | '/transactions' | '/auth'
+  id:
+    | '__root__'
+    | '/'
+    | '/_private'
+    | '/_private/dashboard'
+    | '/_private/transactions'
+    | '/_public/auth'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,6 +103,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_private/transactions': {
+      id: '/_private/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof PrivateTransactionsRouteImport
+      parentRoute: typeof PrivateRoute
+    }
     '/_private/dashboard': {
       id: '/_private/dashboard'
       path: '/dashboard'
@@ -100,10 +122,12 @@ declare module '@tanstack/react-router' {
 
 interface PrivateRouteChildren {
   PrivateDashboardRoute: typeof PrivateDashboardRoute
+  PrivateTransactionsRoute: typeof PrivateTransactionsRoute
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateDashboardRoute: PrivateDashboardRoute,
+  PrivateTransactionsRoute: PrivateTransactionsRoute,
 }
 
 const PrivateRouteWithChildren =
