@@ -10,6 +10,8 @@ import { TransactionTypeBadge } from "./transaction-type-badge";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Transaction } from "@/types/transaction";
+import { Pencil, Trash } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface TransactionsTableProps {
     transactions: Transaction[];
@@ -52,6 +54,14 @@ export function TransactionsTable({ transactions }: TransactionsTableProps) {
                                 )}
                             >
                                 {isIncome ? "+" : "−"} {formatCurrency(transaction.amount)}
+                            </TableCell>
+                            <TableCell className="flex justify-center text-sm font-semibold whitespace-nowrap gap-2">
+                                <Button variant="ghost" size="icon" aria-label="Submit">
+                                    <Pencil />
+                                </Button>
+                                <Button variant="destructive" size="icon" aria-label="Submit">
+                                    <Trash />
+                                </Button>
                             </TableCell>
                         </TableRow>
                     );
