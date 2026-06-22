@@ -54,7 +54,7 @@ export function AppSideBar() {
                 )}
             >
                 {appLogo ? (
-                    <img className="w-8 shrink-0" src={appLogo} alt="logo" />
+                    <img className="size-8 shrink-0" src={appLogo} alt="logo" />
                 ) : (
                     <div className="size-8 shrink-0 rounded-md bg-muted" />
                 )}
@@ -73,7 +73,7 @@ export function AppSideBar() {
 
             <SidebarContent className="py-4">
                 <SidebarGroup>
-                    <SidebarGroupContent className="px-3">
+                    <SidebarGroupContent className={cn("px-3", isCollapsed && "px-2")}>
                         <SidebarMenu className="gap-1">
                             {menuItems.map((item) => {
                                 const isActive = location.pathname === item.url
@@ -86,15 +86,24 @@ export function AppSideBar() {
                                             tooltip={item.title}
                                             isActive={isActive}
                                             className={cn(
-                                                "rounded-lg px-3 transition-colors duration-150",
+                                                "rounded-lg transition-colors duration-150",
+                                                isCollapsed ? "px-0" : "px-3",
                                                 isActive
                                                     ? "bg-primary/10 text-primary font-medium hover:bg-primary/15 hover:text-primary"
                                                     : "text-muted-foreground hover:bg-accent hover:text-foreground",
                                             )}
                                         >
-                                            <Link to={item.url}>
-                                                <item.icon className="size-4" />
-                                                <span>{item.title}</span>
+                                            <Link
+                                                to={item.url}
+                                                className={cn(
+                                                    "flex items-center gap-2",
+                                                    isCollapsed && "justify-center",
+                                                )}
+                                            >
+                                                <item.icon className="size-8 shrink-0" />
+                                                {!isCollapsed && (
+                                                    <span className="truncate">{item.title}</span>
+                                                )}
                                             </Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
