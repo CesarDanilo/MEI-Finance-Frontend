@@ -20,7 +20,7 @@ import { z } from "zod";
 
 import { useNavigate } from "@tanstack/react-router";
 
-import { useAuth } from "@/context/auth-context";
+//import { useAuth } from "@/context/auth-context";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -61,7 +61,7 @@ const signUpSchema = loginSchema
   });
 
 // Tipos inferidos automaticamente dos schemas acima.
-type LoginPayload = z.infer<typeof loginSchema>;
+//type LoginPayload = z.infer<typeof loginSchema>;
 type SignUpPayload = z.infer<typeof signUpSchema>;
 
 export function Login() {
@@ -72,7 +72,7 @@ export function Login() {
   // Aqui assumimos `signIn({ email, password }) => Promise<void>`.
 
   const navigate = useNavigate();
-  const { signIn } = useAuth();
+  //const { signIn } = useAuth();
 
   // ==========================================================================
   // STATES
@@ -118,7 +118,7 @@ export function Login() {
         console.log("Cadastro:", result.data as SignUpPayload);
       } else {
         // TODO: ajustar conforme a assinatura real de `signIn`
-        await signIn(result.data as LoginPayload);
+        // await signIn(result.data as LoginPayload);
       }
 
       navigate({ to: BRAND.redirectAfterLogin });
