@@ -2,15 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { TransactionCard } from "@/components/transactions/transaction-card"; 
-import { TransactionsTable } from "@/components/transactions/transactions-table"; 
+import { TransactionCard } from "@/components/transactions/transaction-card";
+import { TransactionsTable } from "@/components/transactions/transactions-table";
+import { TransactionsFilters } from "@/components/transactions/transactions-filters";
+import { useTransactionsFilters } from "@/hooks/use-transactions-filters";
 import { mockTransactions } from "@/mocks/transactions";
 
 export const Route = createFileRoute("/_private/transactions")({
@@ -18,7 +13,8 @@ export const Route = createFileRoute("/_private/transactions")({
 });
 
 function TransactionsPage() {
-    const transactions = mockTransactions;
+    const { filters, updateFilter, filteredTransactions } =
+        useTransactionsFilters(mockTransactions);
 
     return (
         <div className="flex min-h-screen flex-col bg-muted/30">
@@ -28,45 +24,34 @@ function TransactionsPage() {
             />
 
             <main className="flex flex-1 flex-col gap-4 p-4 md:p-6">
-                {/* Ação principal — full width no mobile, alinhada à direita no desktop */}
-                <div className="flex justify-end">
-                    <Button className="w-full md:w-auto">
-                        <Plus className="size-4" />
-                        Novo Lançamento
-                    </Button>
+                <div className="flex justify-between items-center ">
+                    <TransactionsFilters filters={filters} onFilterChange={updateFilter} />
+
+                    <div className="flex justify-end">
+                        <Button className="w-full md:w-auto">
+                            <Plus className="size-4" />
+                            Novo Lançamento
+                        </Button>
+                    </div>
                 </div>
 
-                {/* Filtro + contador */}
-                <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">Filtrar por:</span>
-                        <Select defaultValue="2026-06">
-                            <SelectTrigger className="w-[140px]">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="2026-06">Jun 2026</SelectItem>
-                                <SelectItem value="2026-05">Mai 2026</SelectItem>
-                                <SelectItem value="2026-04">Abr 2026</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
+                {/* Contador */}
+                <div className="flex items-center justify-end">
                     <span className="text-sm text-muted-foreground whitespace-nowrap">
-                        {transactions.length} lançamentos
+                        {filteredTransactions.length} lançamentos
                     </span>
                 </div>
 
                 {/* Mobile: lista de cards. Desktop: tabela. */}
                 <div className="overflow-hidden rounded-lg border border-border bg-card">
                     <div className="md:hidden">
-                        {transactions.map((transaction) => (
+                        {filteredTransactions.map((transaction) => (
                             <TransactionCard key={transaction.id} transaction={transaction} />
                         ))}
                     </div>
 
                     <div className="hidden md:block">
-                        <TransactionsTable transactions={transactions} />
+                        <TransactionsTable transactions={filteredTransactions} />
                     </div>
                 </div>
             </main>
