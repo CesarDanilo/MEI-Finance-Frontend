@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom/client";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 
+import { AuthProvider } from "@/hooks/useAuth";
 import { routeTree } from "./routeTree.gen";
-import { AuthProvider } from "./context/auth-context";
 
 import "./index.css";
 
@@ -16,10 +16,8 @@ declare module "@tanstack/react-router" {
   }
 }
 
-ReactDOM
-  .createRoot(document.getElementById("root")!)
-  .render(
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>,
+);
