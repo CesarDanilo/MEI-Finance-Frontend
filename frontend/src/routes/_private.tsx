@@ -1,11 +1,13 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+
 import { AppSideBar } from "@/components/Sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { authStorage } from "@/lib/auth-storage";
 
 export const Route = createFileRoute("/_private")({
   beforeLoad: () => {
-    const token = localStorage.getItem("token");
+    const token = authStorage.getToken();
     if (!token) {
       throw redirect({ to: "/auth" });
     }
@@ -14,11 +16,9 @@ export const Route = createFileRoute("/_private")({
 });
 
 function PrivateLayout() {
-  const appName = import.meta.env.VITE_APP_NAME ?? "App";
+  const appName = import.meta.env.VITE_APP_NAME ?? "MEI Finance";
 
   return (
-    // TooltipProvider precisa envolver a árvore que usa tooltips —
-    // o SidebarMenuButton com prop `tooltip` depende disso internamente
     <TooltipProvider delayDuration={0}>
       <SidebarProvider>
         <div className="flex min-h-screen w-full bg-background">

@@ -13,6 +13,9 @@ import { Route as PrivateRouteImport } from './routes/_private'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PublicAuthRouteImport } from './routes/_public/auth'
 import { Route as PrivateTransactionsRouteImport } from './routes/_private/transactions'
+import { Route as PrivateReportsRouteImport } from './routes/_private/reports'
+import { Route as PrivateProfileRouteImport } from './routes/_private/profile'
+import { Route as PrivateMeiLimitRouteImport } from './routes/_private/mei-limit'
 import { Route as PrivateDashboardRouteImport } from './routes/_private/dashboard'
 
 const PrivateRoute = PrivateRouteImport.update({
@@ -34,6 +37,21 @@ const PrivateTransactionsRoute = PrivateTransactionsRouteImport.update({
   path: '/transactions',
   getParentRoute: () => PrivateRoute,
 } as any)
+const PrivateReportsRoute = PrivateReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateProfileRoute = PrivateProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PrivateRoute,
+} as any)
+const PrivateMeiLimitRoute = PrivateMeiLimitRouteImport.update({
+  id: '/mei-limit',
+  path: '/mei-limit',
+  getParentRoute: () => PrivateRoute,
+} as any)
 const PrivateDashboardRoute = PrivateDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -43,12 +61,18 @@ const PrivateDashboardRoute = PrivateDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof PrivateDashboardRoute
+  '/mei-limit': typeof PrivateMeiLimitRoute
+  '/profile': typeof PrivateProfileRoute
+  '/reports': typeof PrivateReportsRoute
   '/transactions': typeof PrivateTransactionsRoute
   '/auth': typeof PublicAuthRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof PrivateDashboardRoute
+  '/mei-limit': typeof PrivateMeiLimitRoute
+  '/profile': typeof PrivateProfileRoute
+  '/reports': typeof PrivateReportsRoute
   '/transactions': typeof PrivateTransactionsRoute
   '/auth': typeof PublicAuthRoute
 }
@@ -57,19 +81,39 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_private': typeof PrivateRouteWithChildren
   '/_private/dashboard': typeof PrivateDashboardRoute
+  '/_private/mei-limit': typeof PrivateMeiLimitRoute
+  '/_private/profile': typeof PrivateProfileRoute
+  '/_private/reports': typeof PrivateReportsRoute
   '/_private/transactions': typeof PrivateTransactionsRoute
   '/_public/auth': typeof PublicAuthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/transactions' | '/auth'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/mei-limit'
+    | '/profile'
+    | '/reports'
+    | '/transactions'
+    | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/transactions' | '/auth'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/mei-limit'
+    | '/profile'
+    | '/reports'
+    | '/transactions'
+    | '/auth'
   id:
     | '__root__'
     | '/'
     | '/_private'
     | '/_private/dashboard'
+    | '/_private/mei-limit'
+    | '/_private/profile'
+    | '/_private/reports'
     | '/_private/transactions'
     | '/_public/auth'
   fileRoutesById: FileRoutesById
@@ -110,6 +154,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateTransactionsRouteImport
       parentRoute: typeof PrivateRoute
     }
+    '/_private/reports': {
+      id: '/_private/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof PrivateReportsRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/profile': {
+      id: '/_private/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof PrivateProfileRouteImport
+      parentRoute: typeof PrivateRoute
+    }
+    '/_private/mei-limit': {
+      id: '/_private/mei-limit'
+      path: '/mei-limit'
+      fullPath: '/mei-limit'
+      preLoaderRoute: typeof PrivateMeiLimitRouteImport
+      parentRoute: typeof PrivateRoute
+    }
     '/_private/dashboard': {
       id: '/_private/dashboard'
       path: '/dashboard'
@@ -122,11 +187,17 @@ declare module '@tanstack/react-router' {
 
 interface PrivateRouteChildren {
   PrivateDashboardRoute: typeof PrivateDashboardRoute
+  PrivateMeiLimitRoute: typeof PrivateMeiLimitRoute
+  PrivateProfileRoute: typeof PrivateProfileRoute
+  PrivateReportsRoute: typeof PrivateReportsRoute
   PrivateTransactionsRoute: typeof PrivateTransactionsRoute
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateDashboardRoute: PrivateDashboardRoute,
+  PrivateMeiLimitRoute: PrivateMeiLimitRoute,
+  PrivateProfileRoute: PrivateProfileRoute,
+  PrivateReportsRoute: PrivateReportsRoute,
   PrivateTransactionsRoute: PrivateTransactionsRoute,
 }
 
