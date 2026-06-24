@@ -19,7 +19,7 @@ export const authService = {
     try {
       return await api.post<LoginResponse>(
         "/auth/login",
-        { email, passwordHash: password },
+        { email, password: password },
         { auth: false },
       );
     } catch (error) {
@@ -35,7 +35,7 @@ export const authService = {
     try {
       return await api.post<RegisterResponse>(
         "/user",
-        { name, email, passwordHash: password },
+        { name, email, password: password },
         { auth: false },
       );
     } catch (error) {

@@ -28,7 +28,7 @@ export type ApiTransaction = {
 
 export type LoginResponse = {
   user: ApiUser;
-  token: string;
+  accessToken: string;
 };
 
 export type RegisterResponse = {

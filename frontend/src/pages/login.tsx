@@ -46,10 +46,12 @@ export function AuthPage() {
                 setSuccessMessage(null);
                 setMode("register");
               }}
-              onSuccess={() => navigate({ to: "/dashboard" })}
+              onSuccess={() => setTimeout(() => {
+                navigate({ to: "/dashboard" });
+              }, 0)}
             />
           ) : (
-            <RegisterForm onSwitchToLogin={switchToLogin} />
+          <RegisterForm onSwitchToLogin={switchToLogin} />
           )}
 
           <p className="text-center text-xs text-muted-foreground">
