@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -19,9 +19,16 @@ import {
   sumByType,
 } from "@/lib/transactions";
 import { useTransactions } from "@/hooks/useTransactions";
+import { authStorage } from "@/lib/auth-storage";
 
 export const Route = createFileRoute("/_private/dashboard")({
   component: DashboardPage,
+  beforeLoad: () => {
+    const token = authStorage.getToken();
+    if (!token) {
+      throw redirect({ to: "/auth" });
+    }
+  }
 });
 
 function DashboardPage() {

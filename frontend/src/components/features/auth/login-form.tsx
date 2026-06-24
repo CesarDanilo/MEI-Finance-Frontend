@@ -31,9 +31,12 @@ export function LoginForm({ onSwitchToRegister, onSuccess }: LoginFormProps) {
   async function onSubmit(values: LoginFormValues) {
     try {
       const response = await authService.login(values.email, values.password);
-      signIn(response.token, response.user);
-      await seedDefaultCategories().catch(() => undefined);
+
+      signIn(response.accessToken, response.user);
+      // await seedDefaultCategories().catch(() => undefined);
+
       onSuccess?.();
+
     } catch (error) {
       if (error instanceof AuthServiceError) {
         setError("root", { message: error.message });
