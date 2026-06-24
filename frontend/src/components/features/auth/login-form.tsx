@@ -33,7 +33,7 @@ export function LoginForm({ onSwitchToRegister, onSuccess }: LoginFormProps) {
       const response = await authService.login(values.email, values.password);
 
       signIn(response.accessToken, response.user);
-      // await seedDefaultCategories().catch(() => undefined);
+      await seedDefaultCategories().catch(() => undefined);
 
       onSuccess?.();
 
