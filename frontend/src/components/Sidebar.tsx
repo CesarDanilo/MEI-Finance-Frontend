@@ -26,6 +26,8 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
 
+import appLogo from "../../public/logo.png";
+
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
   { title: "Lançamentos", icon: ArrowLeftRight, url: "/transactions" },
@@ -43,7 +45,6 @@ export function AppSideBar() {
 
   const appName = import.meta.env.VITE_APP_NAME ?? "MEI Finance";
   const appSubtitle = import.meta.env.VITE_APP_SUBTITLE ?? "Controle simples";
-  const appLogo = import.meta.env.VITE_APP_LOGO_URL ?? "";
 
   function handleLogout() {
     signOut();
