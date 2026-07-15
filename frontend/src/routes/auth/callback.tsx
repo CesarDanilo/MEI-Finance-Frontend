@@ -1,4 +1,4 @@
-// src/routes/auth/callback.tsx (file-based) OU dentro do seu router manual
+// src/routes/auth/callback.tsx
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
@@ -12,7 +12,7 @@ function AuthCallbackPage() {
 
   useEffect(() => {
     if (!token) {
-      navigate({ to: '/login' })
+      navigate({ to: '/auth' }) // <-- era '/login', não existe
       return
     }
 
