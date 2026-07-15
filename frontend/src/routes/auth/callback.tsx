@@ -1,6 +1,7 @@
 // src/routes/auth/callback.tsx
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
+import { authStorage } from '@/lib/auth-storage' // ajuste o path
 
 export const Route = createFileRoute('/auth/callback')({
   component: AuthCallbackPage,
@@ -12,11 +13,10 @@ function AuthCallbackPage() {
 
   useEffect(() => {
     if (!token) {
-      navigate({ to: '/auth' }) // <-- era '/login', não existe
+      navigate({ to: '/auth' })
       return
     }
-
-    localStorage.setItem('accessToken', token)
+    authStorage.setToken(token)
     navigate({ to: '/dashboard' })
   }, [token, navigate])
 
